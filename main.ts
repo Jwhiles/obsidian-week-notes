@@ -51,6 +51,19 @@ export default class MyPlugin extends Plugin {
         this.app?.workspace?.activeLeaf?.openFile(file)
 			}
 		});
+
+    this.addCommand({
+      id: 'insert-week-note-title',
+      name: 'Insert Week Note Title',
+      editorCallback: (editor) => {
+        const lastSunday = dayjs().subtract(dayjs().day(), 'day')
+        const start = lastSunday.add(1, 'day')
+        const end = lastSunday.add(7, 'day')
+        
+        const fileName = `${start.format('YYYY-MM-DD')} - ${end.format('YYYY-MM-DD')}`
+				editor.replaceSelection(fileName);
+			},
+    })
 	}
 
 	onunload() {
